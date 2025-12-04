@@ -108,5 +108,20 @@ def build_structured_prompt(requirements: List[Dict[str, Any]], source_files: Li
         header = f"FILE: {sf['path']}\n" + ("-" * 60)
         code_sections.append(f"{header}\n{sf['content']}")
     code_text = "\n\n".join(code_sections)
-
     prompt = f"""
+You are a rigorous software requirements verification assistant.
+Task: Verify which requirements are implemented in the provided source code, produce a traceability matrix, list missing requirements with justifications, and propose actionable code quality improvements.
+
+Instructions:
+- Respond ONLY in JSON with keys: summary, traceability_matrix, missing_requirements, suggestions, detailed_analysis.
+- traceability_matrix should map requirement IDs to one of: IMPLEMENTED, PARTIALLY_IMPLEMENTED, NOT_IMPLEMENTED, UNKNOWN.
+- detailed_analysis should include per-requirement rationale and any relevant code references (filenames and line snippets).
+- Be concise but specific.
+
+Requirements:
+{req_text}
+
+Source Code (condensed):
+{code_text}
+    """
+    return prompt
