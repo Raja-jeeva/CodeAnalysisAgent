@@ -1,0 +1,58 @@
+Requirements Verification and Code Analysis - Windows Instructions
+
+1) Prerequisites
+- Windows 10/11, 64-bit
+- Python 3.10 or higher installed and added to PATH
+- Internet access (optional, for cloud LLM providers)
+
+2) Create and activate a virtual environment (recommended)
+- Open Windows Terminal or PowerShell in the project root.
+- Create venv:
+  python -m venv .venv
+- Activate venv:
+  .\.venv\Scripts\activate
+
+3) Install dependencies
+- In the activated environment, run:
+  pip install -r requirements.txt
+
+4) Run the Streamlit application
+- From the project root, run:
+  streamlit run src/main.py
+- A browser window will open with the app.
+
+5) Using the application
+- Input Section:
+  - Upload a .docx requirements document.
+  - Enter the source code directory path.
+- Analysis Control Section:
+  - Select the LLM model: GPT-4o, Claude 3.5 Sonnet, or Local Llama 3.
+  - If using GPT-4o (OpenAI) or Claude (Anthropic), provide the API key in the field or set the environment variable:
+    - OPENAI_API_KEY=your_openai_key
+    - ANTHROPIC_API_KEY=your_anthropic_key
+  - Click "Start Analysis".
+- Output & Export Section:
+  - Review the generated verification report.
+  - Export the report as .txt or .pdf; files are saved to the output/ folder.
+
+6) Local Llama 3 (Optional)
+- This app supports a local Llama 3 via Ollama.
+- Install Ollama: https://ollama.ai
+- Pull a model (e.g., llama3):
+  ollama pull llama3
+- Start the Ollama service (it usually runs automatically).
+- Select "Local Llama 3" in the app. No API key required.
+
+7) Logs and troubleshooting
+- Logs are written to output/app.log.
+- If the model returns non-JSON, the app will fall back to a heuristic parse and provide guidance.
+- If no API key is provided or providers are unavailable, the app returns mock results for testing.
+
+8) Packaging a zip
+- To create a zip of the entire project on Windows PowerShell:
+  Compress-Archive -Path * -DestinationPath requirements_verifier.zip
+
+9) Notes
+- The app truncates extremely large code bases to avoid exceeding LLM token limits.
+- Supported source file types include: .py, .js, .ts, .java, .cs, .cpp, .c, .h, .hpp, .go, .rb, .php, .swift, .kt, .rs, .m, .mm, .scala.
+
